@@ -27,13 +27,36 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local k = require("luasnip.nodes.key_indexer").new_key
 
-ls.add_snippets("all", {
-  s("trigger", {
-    t({ "After expanding, the cursor is here ->" }),
-    i(1),
-    t({ "", "After jumping forward once, cursor is here ->" }),
-    i(2),
-    t({ "", "After jumping once more, the snippet is exited there ->" }),
-    i(0),
-  }),
+local function insertIfMultiline(args, _, value)
+  if #args[1] > 1 then
+    return value
+  end
+  return ""
+end
+
+local defaultOpts = { repeat_duplicates = true, indent_string = [[\t]] }
+
+ls.add_snippets("c", {
+  s(
+    "for",
+    fmt(
+      [[
+  for({type} {i} = {init}; {i} < {final}; {change}{i}) {open}
+  \t{body}
+  {close}{end_}
+  ]],
+      {
+        type = i(1, "size_t"),
+        i = i(2, "i"),
+        init = i(3),
+        final = i(4),
+        change = i(5, "++"),
+        open = f(insertIfMultiline, { 6 }, { user_args = { "{" } }),
+        body = i(6),
+        close = f(insertIfMultiline, { 6 }, { user_args = { "}" } }),
+        end_ = i(0),
+      },
+      defaultOpts
+    )
+  ),
 })

@@ -2,8 +2,11 @@
 require("config.lazy")
 
 -- load snippets
-if not vim.g.vscode then
-  for _, path in ipairs(vim.api.nvim_get_runtime_file("lua/snippets/*.lua", true)) do
-    loadfile(path)()
-  end
+-- use function in order to add capability to update snippets without reenter neovim
+function LoadSnippets()
+  vim.cmd("runtime! lua/snippets/*.lua")
 end
+
+LoadSnippets()
+
+require("config.commands")
