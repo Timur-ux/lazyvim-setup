@@ -13,11 +13,11 @@ return {
       },
       providers = {
         snippets = {
-          min_keyword_length = 2,
+          min_keyword_length = 0,
           score_offset = 4,
         },
         lsp = {
-          min_keyword_length = 3,
+          min_keyword_length = 0,
           score_offset = 3,
         },
         path = {
