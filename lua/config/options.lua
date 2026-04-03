@@ -3,6 +3,13 @@
 -- Add any additional options here
 
 vim.g.mapleader = " "
-vim.g.maplocalleader = ","
+vim.g.maplocalleader = "\\"
 
 vim.g.tex_flavor = "latex" -- prefer latex over tex
+
+vim.g.autoformat = false
+
+vim.o.softtabstop = 2
+vim.o.shiftwidth = 2
+vim.o.expandtab = false
+vim.o.exrc = true

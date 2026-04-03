@@ -3,6 +3,7 @@
 -- Add any additional keymaps here
 
 local map = vim.keymap.set
+local removeMap = vim.keymap.del
 
 map("i", "jk", "<esc>", { noremap = true, silent = true })
 map("t", "jk", "<c-\\><c-n>", { noremap = false, silent = true })
