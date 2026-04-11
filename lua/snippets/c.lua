@@ -48,7 +48,7 @@ ls.add_snippets("c", {
       {
         type = i(1, "size_t"),
         i = i(2, "i"),
-        init = i(3),
+        init = i(3, "0"),
         final = i(4),
         change = i(5, "++"),
         open = f(insertIfMultiline, { 6 }, { user_args = { "{" } }),

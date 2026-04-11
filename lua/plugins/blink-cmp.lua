@@ -13,20 +13,16 @@ return {
       },
       providers = {
         snippets = {
-          min_keyword_length = 0,
-          score_offset = 4,
+          score_offset = 100,
         },
         lsp = {
-          min_keyword_length = 0,
-          score_offset = 3,
+          score_offset = 50,
         },
         path = {
-          min_keyword_length = 0,
-          score_offset = 2,
+          score_offset = 25,
         },
         buffer = {
-          min_keyword_length = 5,
-          score_offset = 1,
+          score_offset = 10,
         },
       },
     },
