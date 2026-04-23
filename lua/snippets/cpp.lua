@@ -26,68 +26,23 @@ local types = require("luasnip.util.types")
 local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local k = require("luasnip.nodes.key_indexer").new_key
-
-local function insertIfMultiline(args, _, value)
-  if #args[1] > 1 then
-    return value
-  end
-  return ""
-end
-
 local defaultOpts = { repeat_duplicates = true, indent_string = [[\t]] }
 
-ls.add_snippets("c", {
+ls.filetype_extend("cpp", { "c" })
+ls.add_snippets("cpp", {
   s(
-    "for",
-    fmt(
-      [[
-  for({type} {i} = {init}; {i} < {final}; {change}{i}) {open}
-  \t{body}
-  {close}{end_}
-  ]],
-      {
-        type = i(1, "size_t"),
-        i = i(2, "i"),
-        init = i(3, "0"),
-        final = i(4),
-        change = i(5, "++"),
-        open = f(insertIfMultiline, { 6 }, { user_args = { "{" } }),
-        body = i(6),
-        close = f(insertIfMultiline, { 6 }, { user_args = { "}" } }),
-        end_ = i(0),
-      },
-      defaultOpts
-    )
-  ),
-  s(
-    "main",
+    "name",
     fmta(
       [[
-		int main(int argc, const char * argw[]) {
-
-		}
-		]],
-      {},
-      defaultOpts
-    )
-  ),
-  s(
-    "ifn",
-    fmt(
-      [[
-		#ifndef {name}
-		#define {name}
-		#pragma once
-		{end_}
-		#endif // {name}
-		]],
+	namespace <name> {
+	<end_>
+	} // <name>
+	]],
       {
-        name = i(1, "HEADER_H"),
+        name = i(1, "NsName"),
         end_ = i(0),
       },
       defaultOpts
     )
   ),
-  s("incq", fmt('#include "{}"', { i(1) }, defaultOpts)),
-  s("inca", fmt("#include <{}>", { i(1) }, defaultOpts)),
 })

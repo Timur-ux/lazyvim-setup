@@ -13,6 +13,7 @@ return {
       },
       providers = {
         snippets = {
+					min_keyword_length=2,
           score_offset = 100,
         },
         lsp = {
@@ -22,6 +23,7 @@ return {
           score_offset = 25,
         },
         buffer = {
+					min_keyword_length=3,
           score_offset = 10,
         },
       },

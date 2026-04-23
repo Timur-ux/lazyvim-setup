@@ -26,68 +26,54 @@ local types = require("luasnip.util.types")
 local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 local k = require("luasnip.nodes.key_indexer").new_key
-
-local function insertIfMultiline(args, _, value)
-  if #args[1] > 1 then
-    return value
-  end
-  return ""
-end
-
 local defaultOpts = { repeat_duplicates = true, indent_string = [[\t]] }
 
-ls.add_snippets("c", {
+ls.add_snippets("cmake", {
   s(
-    "for",
-    fmt(
-      [[
-  for({type} {i} = {init}; {i} < {final}; {change}{i}) {open}
-  \t{body}
-  {close}{end_}
-  ]],
-      {
-        type = i(1, "size_t"),
-        i = i(2, "i"),
-        init = i(3, "0"),
-        final = i(4),
-        change = i(5, "++"),
-        open = f(insertIfMultiline, { 6 }, { user_args = { "{" } }),
-        body = i(6),
-        close = f(insertIfMultiline, { 6 }, { user_args = { "}" } }),
-        end_ = i(0),
-      },
-      defaultOpts
-    )
-  ),
-  s(
-    "main",
+    "cpp",
     fmta(
       [[
-		int main(int argc, const char * argw[]) {
+cmake_minimum_required(VERSION 3.10)
 
-		}
-		]],
-      {},
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+project(
+	<name>
+	LANGUAGES CXX
+)
+
+set(CMAKE_CXX_STANDARD <standard>)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+file(GLOB_RECURSE SRC_FILES LIST_DIRECTORIES FALSE ./src/*.cpp)
+
+add_library(src_lib SHARED ${SRC_FILES})
+
+include_directories("include")
+
+add_executable(main main.cpp)
+target_link_libraries(main src_lib)
+
+file(GLOB_RECURSE TESTS_FILES LIST_DIRECTORIES FALSE ./tests/*.cpp)
+include(FetchContent)
+FetchContent_Declare(
+	googletest
+	GIT_REPOSITORY https://github.com/google/googletest.git
+	GIT_TAG        release-1.11.0
+)
+
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
+add_executable(tests ${TESTS_FILES})
+target_link_libraries(tests GTest::gtest_main src_lib)
+
+include(GoogleTest)
+gtest_discover_tests(tests)
+]],
+      { name = i(1, "ProjectName"), standard = i(2, "23") },
       defaultOpts
     )
   ),
-  s(
-    "ifn",
-    fmt(
-      [[
-		#ifndef {name}
-		#define {name}
-		#pragma once
-		{end_}
-		#endif // {name}
-		]],
-      {
-        name = i(1, "HEADER_H"),
-        end_ = i(0),
-      },
-      defaultOpts
-    )
-  ),
-  s("incq", fmt('#include "{}"', { i(1) }, defaultOpts)),
-  s("inca", fmt("#include <{}>", { i(1) }, defaultOpts)),
 })

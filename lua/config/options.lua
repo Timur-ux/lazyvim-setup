@@ -6,7 +6,6 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 vim.g.tex_flavor = "latex" -- prefer latex over tex
-
 vim.g.autoformat = false
 
 vim.o.softtabstop = 2
@@ -14,9 +13,9 @@ vim.o.shiftwidth = 2
 vim.o.expandtab = false
 vim.o.exrc = true
 vim.o.mouse = ""
+vim.o.conceallevel = 0
 
 vim.wo.wrap = true
-
 -- langmap options
 vim.o.langremap = false
 local function escape(str)
