@@ -7,4 +7,9 @@ return {
     "folke/flash.nvim",
     enabled = false,
   },
+	{
+
+    "Wansmer/langmapper.nvim",
+		enabled = false
+	}
 }
