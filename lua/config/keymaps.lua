@@ -3,10 +3,11 @@
 -- Add any additional keymaps here
 
 local map = vim.keymap.set
-local removeMap = vim.keymap.del
 
-map("i", "jk", "<esc>", { noremap = true, silent = true })
-map("t", "jk", "<c-\\><c-n>", { noremap = false, silent = true })
+map("i", "vn", "<esc>", {noremap = true, silent = true})
+map("t", "vn", "<c-\\><c-n>", { noremap = false, silent = true })
+map("i", "мт", "<esc>", {noremap = true, silent = true})
+map("t", "мт", "<c-\\><c-n>", { noremap = false, silent = true })
 
 local ls = require("luasnip")
 map({ "i", "s" }, "<c-p>", function()
@@ -23,10 +24,6 @@ local harpoon = require("harpoon")
 local Path = require("plenary.path")
 local function normalize_path(buf_name, root)
   return Path:new(buf_name):make_relative(root)
-end
-
-local BufferAdd = function(list, bufname)
-  list:add()
 end
 
 local SquashList = function(list)
@@ -55,26 +52,3 @@ local SquashList = function(list)
   end
 end
 
-local BufferDelete = function(list, idx)
-  list:remove(list:get(idx))
-  SquashList(list)
-end
-
-local BufferToggle = function()
-  vim.api.nvim_command("BufferLineTogglePin")
-  local bufnr = vim.api.nvim_get_current_buf()
-  local bufname = normalize_path(vim.api.nvim_buf_get_name(bufnr), vim.fn.getcwd())
-
-  local list = harpoon:list()
-  local len = list:length()
-  for i = 1, len do
-    local item = list:get(i)
-    if item and item.value == bufname then
-      BufferDelete(list, i)
-      return
-    end
-  end
-  BufferAdd(list)
-end
-
-map("n", "<leader>bp", BufferToggle, { desc="Toggle pin and harpoon", noremap = false , silent = true})
