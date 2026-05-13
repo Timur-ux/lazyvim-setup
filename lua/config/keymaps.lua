@@ -18,37 +18,3 @@ map({ "i", "s" }, "<c-n>", function()
   ls.change_choice(-1)
 end, { silent = true })
 
--- harpoon + bufferline pinned buffers match
-
-local harpoon = require("harpoon")
-local Path = require("plenary.path")
-local function normalize_path(buf_name, root)
-  return Path:new(buf_name):make_relative(root)
-end
-
-local SquashList = function(list)
-  local len = list:length()
-  local isSquashNeed = false
-  for i = 1, len do
-    if not list:get(i) then
-      isSquashNeed = true
-      break
-    end
-  end
-	if not isSquashNeed then
-		return
-	end
-
-  local items = {}
-  for i = 1, len do
-    local item = list:get(i)
-    if item then
-      table.insert(items, item)
-    end
-  end
-  list:clear()
-  for _, item in ipairs(items) do
-    list:add(item)
-  end
-end
-

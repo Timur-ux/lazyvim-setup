@@ -9,19 +9,7 @@ return {
   {
     "akinsho/bufferline.nvim",
     dependencies = { "ThePrimagen/harpoon" },
-    opts = {
-      -- options = {
-      --   sort_by = function(buffer_a, buffer_b)
-      --     local list = require("harpoon"):list()
-      --     local item_a, idx_a = list:get_by_value(normalize_path(buffer_a.path, vim.fn.getcwd()))
-      --     local item_b, idx_b = list:get_by_value(normalize_path(buffer_b.path, vim.fn.getcwd()))
-      --     if item_a and item_b then
-      --       return idx_a > idx_b
-      --     end
-      --     return buffer_a.path > buffer_b.path
-      --   end,
-      -- },
-    },
+    opts = { },
   },
   {
     "ThePrimeagen/harpoon",
