@@ -20,17 +20,6 @@ return {
         },
         clangd = {},
         texlab = {},
-        nil_ls = {},
-        omnisharp = {
-          settings = {
-            FormattingOptions = {
-              newLine = "\n",
-              useTabs = true,
-              tabSize = 2,
-              indentationSize = 2,
-            },
-          },
-        },
       },
     },
   },

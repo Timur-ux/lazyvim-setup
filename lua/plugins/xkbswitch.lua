@@ -1,4 +1,5 @@
 return {
+	enabled = false;
 	lazy = false,
 	"Timur-ux/xkbswitch.nvim",
 	opts = {
